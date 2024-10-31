@@ -13,6 +13,9 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import org.springframework.http.HttpHeaders;
 
 @TestMethodOrder(MethodOrderer.Random.class)
@@ -23,10 +26,10 @@ public class BookClientTests {
     private ClientProperties clientProperties;
 
     @BeforeEach
-    void setup() throws IOException {
+    void setup() throws IOException, URISyntaxException {
         this.mockWebServer = new MockWebServer();
         this.mockWebServer.start();
-        clientProperties = new ClientProperties(null, 3, 3);
+        clientProperties = new ClientProperties(null, new URI("http://localhost:9001"), 3, 3);
         var webClient = WebClient.builder()
                 .baseUrl(mockWebServer.url("/").uri().toString())
                 .build();
