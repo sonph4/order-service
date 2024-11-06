@@ -57,7 +57,6 @@ public class OrderService {
         );
     }
 
-
     public Flux<Order> getAllOrders() {
         return orderRepository.findAll();
     }
